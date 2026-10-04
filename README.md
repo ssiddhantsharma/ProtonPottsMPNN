@@ -44,9 +44,9 @@ FLAML stack, jupyter, propka), verifies `import mpnn` resolves inside this folde
 a Jupyter kernel `ProtonPottsMPNN (.venv)`. Scripts just `import mpnn`; there are no `sys.path` hacks.
 
 - **Python 3.12** is required (`mpnn`/`foundry` pin `>=3.12,<3.13`).
-- **HBPLUS** is an external C binary (not pip-installable) used by the **labeller** and the **fold scoring**
-  to read H-bond geometry. Point `HBPLUS_PATH` at your build (`export HBPLUS_PATH=/path/to/hbplus`). It is
-  **not** needed to run the design engine (which only reads the trained checkpoint).
+- **HBPLUS** is an external C binary (not pip-installable) used by the **labeller**, the **fold scoring**,
+  and the **design engine** (the v6 extended vocab's H-bond features, via `CalculateHbondsPlus`) to read
+  H-bond geometry. Point `HBPLUS_PATH` at your build (`export HBPLUS_PATH=/path/to/hbplus`).
 - Let the install finish uninterrupted — a killed `uv pip install` can leave the venv half-written (package
   metadata present, module files missing). If imports fail oddly, repair in place with
   `uv pip install --python .venv/bin/python --reinstall -e ./foundry -r requirements-extra.txt`.
@@ -54,7 +54,7 @@ a Jupyter kernel `ProtonPottsMPNN (.venv)`. Scripts just `import mpnn`; there ar
 | part | needs mpnn/torch | needs HBPLUS | needs FLAML stack | needs external oracle weights |
 |------|:---:|:---:|:---:|:---:|
 | **label a PDB** (`labeller/`) | ✅ | ✅ | ✅ | — |
-| **design a binder** (`inference/`) | ✅ | — | — | — |
+| **design a binder** (`inference/`) | ✅ | ✅ | — | — |
 | **score a fold** (`scoring/`) | ✅ | ✅ (pH-bonds) | — | — |
 | **benchmarks** (`benchmarks/`) | ✅ | — | — | ProteinMPNN arm only |
 | **train** (`training/`, reference) | ✅ | ✅ | — | — |
